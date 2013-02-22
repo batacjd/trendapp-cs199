@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="main_procs"/>
+	<classpathentry kind="lib" path="htmlreducer/bin/jsoup-1.7.2.jar"/>
+	<classpathentry kind="lib" path="stem/bin/postgresql-9.2-1002.jdbc4.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="stem/src"/>
+</classpath>

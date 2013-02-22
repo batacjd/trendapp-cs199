@@ -9,10 +9,11 @@ import java.io.IOException;
 
 class Reducer{
 
-	public static void main(String []args)throws IOException{
+	public void start_reduce()throws IOException{
 		
+		System.out.println("-------- Starting reduction process... ------------");
 		//Read from file
-		File folder = new File("C:/Users/Alibaba/Documents/GitHub/trendAppThesis/Files_r/raw files");
+		File folder = new File("ext_files/R_raw_files");
 		File[] listOfFiles = folder.listFiles();
 		int i = 0;
 		
@@ -20,7 +21,7 @@ class Reducer{
 			
 			if( listOfFiles[i].isFile()){
 				String files = listOfFiles[i].getName();
-				System.out.println(files);
+				System.out.println("...Reading file "+files);
 			}
 			
 			FileReader reader = new FileReader(listOfFiles[i]);
@@ -43,14 +44,18 @@ class Reducer{
 			procln = procln.replaceAll("\\<.*?>","");
 			
 			//Write output to file
-			FileWriter writer = new FileWriter("C:/Users/Alibaba/Documents/GitHub/trendAppThesis/Files_r/output files/output"+i+".txt");
+			FileWriter writer = new FileWriter("ext_files/R_output_files/output"+i+".txt");
 			BufferedWriter bw = new BufferedWriter(writer);
 			bw.write(procln);
+			System.out.println("...created file output"+i);
+			br.close();
+			bw.close();
 			
 		}//end for loop
 		
 		//Notify user that program has ended by printing to console
-		System.out.println("End of program");
+		System.out.println("End of reduction!");
+		
 		
 	}
 	

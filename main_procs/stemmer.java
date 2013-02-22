@@ -34,6 +34,8 @@
 */
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
   * Stemmer, implementing the Porter Stemming Algorithm
@@ -364,18 +366,33 @@ class Stemmer
     * output. Note that the word stemmed is expected to be in lower case:
     * forcing lower case must be done outside the Stemmer class.
     * Usage: Stemmer file-name file-name ...
+ * @throws IOException 
     */
-   public static void main(String[] args)
+   public void start_stem() throws IOException
    {
+	  //Connect to database.
+	  //Insert stemmed words directly to the database before we start categorizing them
+	  //Categorization is done using PHP
+	  System.out.println("Connecting to database...");
+	  Connect_db cd = new Connect_db();
+	  Connection connection;
+	  connection = cd.connect();
+	  
+	  //Start stemming after the database has connected    
+	  System.out.println("-------- Starting stemming process... ------------");
+	   
       char[] w = new char[501];
       Stemmer s = new Stemmer();
-      String filename = "input.txt";
+      String filename = "ext_files/S_raw_files/input.txt";
       
       //for (int i = 0; i < args.length; i++)
       try
       {
          FileReader in = new FileReader(filename);
-
+         
+         //FileWriter out = new FileWriter("ext_files/S_output_files/output.txt");
+         //BufferedWriter bw = new BufferedWriter(out);
+         
          try
          { while(true)
 
@@ -404,12 +421,24 @@ class Stemmer
 
                           /* to test getResultBuffer(), getResultLength() : */
                           /* u = new String(s.getResultBuffer(), 0, s.getResultLength()); */
-
-                          System.out.print(u);
+                          
+                          //Write to file
+                          //System.out.println(u);
+                          
+                          //Insert each term to a temporary table in database
+                          /*
+                          Insert_db id = new Insert_db();
+	              			try {
+	              				id.insert(connection,u);
+	              			} catch (SQLException e) {
+	              				// TODO Auto-generated catch block
+	              			}
+	              			*/
                        }
                        break;
                     }
                  }
+                 
               }
               if (ch < 0) break;
               System.out.print((char)ch);
@@ -417,12 +446,15 @@ class Stemmer
          }
          catch (IOException e)
          {  System.out.println("error reading " + filename);
-            //break;
          }
+         
+         //bw.close();
       }
       catch (FileNotFoundException e)
       {  System.out.println("file " + filename + " not found");
-         //break;
       }
+      
+      System.out.print("End of stemming!");
+
    }
 }
