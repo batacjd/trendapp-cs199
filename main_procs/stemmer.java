@@ -381,80 +381,56 @@ class Stemmer
 	  //Start stemming after the database has connected    
 	  System.out.println("-------- Starting stemming process... ------------");
 	   
-      char[] w = new char[501];
       Stemmer s = new Stemmer();
       String filename = "ext_files/S_raw_files/input.txt";
       
-      //for (int i = 0; i < args.length; i++)
-      try
-      {
-         FileReader in = new FileReader(filename);
-         
-         //FileWriter out = new FileWriter("ext_files/S_output_files/output.txt");
-         //BufferedWriter bw = new BufferedWriter(out);
-         
-         try
-         { while(true)
-
-           {  int ch = in.read();
-              if (Character.isLetter((char) ch))
-              {
-                 int j = 0;
-                 while(true)
-                 {  ch = Character.toLowerCase((char) ch);
-                    w[j] = (char) ch;
-                    if (j < 500) j++;
-                    ch = in.read();
-                    if (!Character.isLetter((char) ch))
-                    {
-                       /* to test add(char ch) */
-                       for (int c = 0; c < j; c++) s.add(w[c]);
-
-                       /* or, to test add(char[] w, int j) */
-                       /* s.add(w, j); */
-
-                       s.stem();
-                       {  String u;
-
-                          /* and now, to test toString() : */
-                          u = s.toString();
-
-                          /* to test getResultBuffer(), getResultLength() : */
-                          /* u = new String(s.getResultBuffer(), 0, s.getResultLength()); */
-                          
-                          //Write to file
-                          //System.out.println(u);
-                          
-                          //Insert each term to a temporary table in database
-                          /*
-                          Insert_db id = new Insert_db();
-	              			try {
-	              				id.insert(connection,u);
-	              			} catch (SQLException e) {
-	              				// TODO Auto-generated catch block
-	              			}
-	              			*/
-                       }
-                       break;
-                    }
-                 }
-                 
-              }
-              if (ch < 0) break;
-              System.out.print((char)ch);
-           }
-         }
-         catch (IOException e)
-         {  System.out.println("error reading " + filename);
-         }
-         
-         //bw.close();
-      }
-      catch (FileNotFoundException e)
-      {  System.out.println("file " + filename + " not found");
+      FileReader reader = new FileReader(filename);
+      BufferedReader br = new BufferedReader(reader);
+      
+      String line;
+      while ((line = br.readLine()) != null){
+    	  //if line contains 2 or more words, stem each word first then combine again before inserting to database
+    	  if(line.contains(" ")) {
+    		  String[] mult = line.split(" ");
+    		  String u = "";
+    		  int i = 0;
+    		  for(i = 0; i < mult.length; i++){
+    			  char[] multSplit = mult[i].toCharArray();
+    			  int j = 0;
+        		  for(j = 0; j < multSplit.length ; j++) s.add(multSplit[j]);
+        		  s.stem();
+        		  String v;
+        		  v = s.toString();
+        		  if(i == 0) u = v;
+        		  else u = u + " " + v;
+    		  }
+    		  //insertion to database
+    		  Insert_db id = new Insert_db();
+	  		  try {
+	  			id.insert(connection,u);
+	  		  } catch (SQLException e) {
+	  			// TODO Auto-generated catch block
+	  		  }
+    	  }else{
+    		  
+    		  char[] lineSplit = line.toCharArray();
+    		  int i = 0;
+    		  for(i = 0; i < lineSplit.length ; i++) s.add(lineSplit[i]);
+    		  s.stem();
+    		  
+    		  String u;
+    		  u = s.toString();
+    		  
+    		  //insertion to database
+    		  Insert_db id = new Insert_db();
+    			try {
+    				id.insert(connection,u);
+    			} catch (SQLException e) {
+    				// TODO Auto-generated catch block
+    			}
+    	  }
       }
       
-      System.out.print("End of stemming!");
 
    }
 }
