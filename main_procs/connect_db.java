@@ -6,7 +6,7 @@ class Connect_db {
 	
 	public Connection connect() {
 		 
-		System.out.println("-------- PostgreSQL "
+		System.out.println("\n-------- PostgreSQL "
 				+ "JDBC Connection Testing ------------");
  
 		try {

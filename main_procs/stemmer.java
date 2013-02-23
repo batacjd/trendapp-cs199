@@ -368,18 +368,25 @@ class Stemmer
     * Usage: Stemmer file-name file-name ...
  * @throws IOException 
     */
-   public void start_stem() throws IOException
+   
+   private void categorize(Connection connection, String u) {
+	   System.out.print("Categorizing "+u+"...");
+	   Categorize c = new Categorize();
+	   int ctg;
+	   try {
+		   ctg = c.start_categorize(connection, u);
+		   System.out.println("..."+u+"'s categoryid is: "+ctg);
+	   } catch (SQLException e) {
+		   // TODO Auto-generated catch block
+		   e.printStackTrace();
+	   }
+   }
+   
+   protected void start_stem(Connection connection) throws IOException
    {
-	  //Connect to database.
-	  //Insert stemmed words directly to the database before we start categorizing them
-	  //Categorization is done using PHP
-	  System.out.println("Connecting to database...");
-	  Connect_db cd = new Connect_db();
-	  Connection connection;
-	  connection = cd.connect();
 	  
 	  //Start stemming after the database has connected    
-	  System.out.println("-------- Starting stemming process... ------------");
+	  System.out.println("\n-------- Starting stemming & categorization... ------------");
 	   
       Stemmer s = new Stemmer();
       String filename = "ext_files/S_raw_files/input.txt";
@@ -404,13 +411,10 @@ class Stemmer
         		  if(i == 0) u = v;
         		  else u = u + " " + v;
     		  }
-    		  //insertion to database
-    		  Insert_db id = new Insert_db();
-	  		  try {
-	  			id.insert(connection,u);
-	  		  } catch (SQLException e) {
-	  			// TODO Auto-generated catch block
-	  		  }
+    		  System.out.println("Stemmed "+line+" to "+u+".");
+    		  //do categorization
+    		  categorize(connection,u);
+    		  
     	  }else{
     		  
     		  char[] lineSplit = line.toCharArray();
@@ -421,16 +425,15 @@ class Stemmer
     		  String u;
     		  u = s.toString();
     		  
-    		  //insertion to database
-    		  Insert_db id = new Insert_db();
-    			try {
-    				id.insert(connection,u);
-    			} catch (SQLException e) {
-    				// TODO Auto-generated catch block
-    			}
-    	  }
-      }
+    		  System.out.println("..stemmed "+line+" to "+u);
+    		  
+    		  //do categorization
+    		  categorize(connection,u);
+    	  }//end if else
+    	  
+    	  
+      }//end while
       
 
-   }
+   }//end start_stem
 }

@@ -9,7 +9,7 @@ import java.io.IOException;
 
 class Reducer{
 
-	public void start_reduce()throws IOException{
+	protected void start_reduce()throws IOException{
 		
 		System.out.println("-------- Starting reduction process... ------------");
 		//Read from file
@@ -21,7 +21,7 @@ class Reducer{
 			
 			if( listOfFiles[i].isFile()){
 				String files = listOfFiles[i].getName();
-				System.out.println("...Reading file "+files);
+				System.out.print("Reading file "+files+"...");
 			}
 			
 			FileReader reader = new FileReader(listOfFiles[i]);
@@ -54,7 +54,7 @@ class Reducer{
 		}//end for loop
 		
 		//Notify user that program has ended by printing to console
-		System.out.println("End of reduction!");
+		System.out.println("\nAll files' contents have been reduced.");
 		
 		
 	}

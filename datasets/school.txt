@@ -1,0 +1,54 @@
+classmate
+coach
+cook
+headmaster
+janitor
+librarian
+president
+principal
+professor
+secretary
+student
+teacher
+college
+elementary school
+graduate school
+high school
+junior college
+junior high school
+kindergarten
+nursery
+technical school
+university
+algebra
+anatomy
+anthropology
+archeology
+architecture
+art
+astronomy
+biology
+botany
+calculus
+chemistry
+economics
+engineering
+English
+geography
+geology
+geometry
+health
+history
+law
+literature
+math
+medicine
+music
+philosophy
+physics
+psychology
+science
+sociology
+statistics
+trigonometry
+zoology

@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.sql.Connection;
 
 class Prim_fcn {
 	
@@ -9,9 +10,16 @@ class Prim_fcn {
 		Stemmer stemmer_cons = new Stemmer();
 		
 		reducer_cons.start_reduce();
-		stemmer_cons.start_stem();
 		
-		System.out.println("..Program ended..");
+		//Connect to database.
+		System.out.println("Connecting now to database.");
+		Connect_db cd = new Connect_db();
+		Connection connection;
+		connection = cd.connect();
+		
+		stemmer_cons.start_stem(connection);
+
+		System.out.println("\nProgram ended..");
 		
 	}
 	

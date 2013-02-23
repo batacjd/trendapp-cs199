@@ -1,0 +1,65 @@
+hospital
+breath
+cavities
+chew
+cup
+dental surgeon
+dentist
+enamel
+erosion
+filling
+floss
+fluoride
+gingivitis
+gum-line
+gums
+molar
+mouthwash
+periodontal
+root canal
+smile
+teeth
+tooth fairy
+toothbrush
+toothpaste
+toothpick
+whitening
+black eye
+blister
+broken bone
+bruise
+burn
+cut
+dislocation
+fracture
+lump
+scrape
+scratch
+splinter
+sprain
+sun burn
+swelling
+backache
+chills
+cough
+earache
+fever
+headache
+infection
+runny nose
+sore throat
+stomach ache
+anethesiologist
+dietician
+doctor
+medical technician
+nurse
+ophthalmologist
+patient
+pediatrician
+physician
+psychiatrist
+security guard
+specialist
+surgeon
+visitor
